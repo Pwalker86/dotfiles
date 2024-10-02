@@ -1,12 +1,35 @@
+" Basic settings
+set number              " Show line numbers
+set relativenumber      " Show relative line numbers
+set tabstop=2           " Number of spaces that a <Tab> in the file counts for
+set shiftwidth=2        " Number of spaces to use for each step of (auto)indent
+set expandtab           " Use spaces instead of tabs
+set smartindent         " Smart autoindenting when starting a new line
+set autoindent          " Copy indent from current line when starting a new line
+set wrap                " Wrap long lines
+set cursorline          " Highlight the current line
+set cursorcolumn
+set clipboard=unnamedplus " Use system clipboard
+set mouse=a             " Enable mouse support
+set splitbelow splitright " split down and to the right
+set wildmenu
+set wildmode=longest:full,full
 
-call plug#begin()
-  Plug 'github/copilot.vim'
-  Plug 'scrooloose/nerdtree'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'flazz/vim-colorschemes'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim', {
+" Search settings
+set ignorecase          " Ignore case when searching
+set smartcase           " Override ignorecase if search pattern contains uppercase
+set incsearch           " Show search matches as you type
+set hlsearch            " Highlight search matches
+
+
+" Plugins
+call plug#begin('~/.config/nvim/plugged')
+
+" Add your plugins here
+" Plug 'burntsushi/ripgrep'
+Plug 'wincent/ferret'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
+Plug 'junegunn/fzf.vim', {
     \ 'on': [
             \ 'Ag',
             \ 'Rg',
@@ -22,157 +45,77 @@ call plug#begin()
             \ 'BLines',
             \ 'Marks'
         \ ] }
-  Plug 'pangloss/vim-javascript'
-  Plug 'maxmellon/vim-jsx-pretty'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'raimondi/delimitmate'
-  Plug 'mattn/emmet-vim'
-  Plug 'alvan/vim-closetag'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-rhubarb'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-surround'
-  Plug 'mbbill/undotree'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+" or                                , { 'branch': '0.1.x' }
+" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-rails'
+Plug 'github/copilot.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine
+Plug 'preservim/nerdtree'        " File explorer
+Plug 'airblade/vim-gitgutter'    " Git diff in the sign column
+Plug 'vim-airline/vim-airline'   " Status bar
+Plug 'vim-airline/vim-airline-themes' " Status bar themes
+Plug 'mattn/emmet-vim'
+Plug 'folke/tokyonight.nvim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+
 call plug#end()
-
-
-" Options
-set background=dark
-
-set clipboard=unnamedplus
-set completeopt=noinsert,menuone,noselect
-set cursorline
-set cursorcolumn
-set hidden
-set inccommand=split
-set mouse=a
-set number
-set relativenumber
-set splitbelow splitright
-set title
-set ttimeoutlen=0
-set wildmenu
-set termguicolors
-set background=dark
-set autoindent
-set smartindent
-colorscheme molokai
-
-" Tabs size
-set expandtab
-set shiftwidth=2
-set tabstop=2
-
-" Syntax
-filetype plugin indent on
-syntax on
-
-"Color Support
-set t_Co=256
-
-"Ctrl + direction to change panes
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-
-"Remap esc to 'fj' or 'jf'
-imap fj <esc>
-imap jf <esc>
-
-" turn off search highlighting with leader <space>
-noremap <leader><space> :nohlsearch<CR>
-
-
-"************CloseTag options **********8
-" filenames like *.xml, *.html, *.xhtml, ...
-" These are the file extensions where this plugin is enabled.
 "
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js, *.jsx'
-
-" filenames like *.xml, *.xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
-
-" filetypes like xml, html, xhtml, ...
-" These are the file types where this plugin is enabled.
-"
-let g:closetag_filetypes = 'html,xhtml,phtml,js, jsx'
-
-" filetypes like xml, xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filetypes = 'xhtml,jsx, js'
-
-" integer value [0|1]
-" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while`<link>` won't.)
-"
-let g:closetag_emptyTags_caseSensitive = 1
-
-" dict
-" Disables auto-close if not in a "valid" region (based on filetype)
-"
-let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ 'typescriptreact': 'jsxRegion,tsxRegion',
-    \ 'javascriptreact': 'jsxRegion',
-    \ }
-
-" Shortcut for closing tags, default is '>'
-"
-let g:closetag_shortcut = '>'
-
-" Add > at current position without closing the current tag, default is ''
-"
-let g:closetag_close_shortcut = '<leader>>' 
-
-
-
-"*********** Nerdtree ************
-autocmd StdinReadPre * let s:std_in=1
-let g:NERDTreeWinSize=40
-map <BS> :NERDTreeToggle<CR>
-noremap <leader>o :NERDTreeFind<CR>
+"******** RipGrep settings *************
+"use RipGrep with /a
+" nmap <leader>a :Rg 
 
 "******* fzf settings *********
-"searches files while respecting .gitignore
+" " initialize fzf setting dictionary
+" let g:fzf_vim = {}
+
+
+" Use fd to list files, respecting .gitignore, and limit search to the current project directory
+let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
+""searches files while respecting .gitignore
 noremap <C-p> :Files<Cr>
-"searches open files
+""searches open files
 noremap <Leader>b :Buffers<cr>
-"searches current file
+""searches current file
 noremap <Leader>l :BLines<cr>
 
 let g:fzf_layout = {'down': '~40%'}
+"
+" ********** Telescope settings *************
+" -- To get fzf loaded and working with telescope, you need to call
+" -- load_extension, somewhere after setup function:
+"
+" lua << EOF
+" require('telescope').load_extension('fzf')
+" EOF
 
-"******* Ripgrep *********
-set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
-let g:rg_derive_root='true'
-"use RipGrep with /
-nmap <leader>a :Rg 
-
-"map :Q & :W to :q and :w for easier 'write' and 'quite'
-noremap :Q :q
-noremap :W :w
-
-"sync syntax highlighting for large files
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-"more room for displaying messages
-set cmdheight=2
-"shorter updatetime
-set updatetime=300
-
-nmap <leader>p  <Plug>(GitGutterPreviewHunk)
-nmap <leader>s  <Plug>(GitGutterStageHunk)
-nmap <leader>u  <Plug>(GitGutterUndoHunk)
-
-noremap <leader>gb :G blame<cr>
+" Use <leader>ff to find files
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 
-"*********** Coc *************8
+"********** NERDTree settings *************
+"Toggle NERDTree with leader+e
+autocmd StdinReadPre * let s:std_in=1
+let g:NERDTreeWinSize=40
+map <leader>e :NERDTreeToggle<CR>
+noremap <leader>o :NERDTreeFind<CR>
+
+"********** CoC settings *************
+" CoC (Conquer of Completion) settings
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-solargraph']
+
 nmap <leader>do <Plug>(coc-codeaction)
 nmap <leader>rn <Plug>(coc-rename)
 nmap <silent> gd <Plug>(coc-definition)
@@ -188,7 +131,6 @@ nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-command! -nargs=0 JestCurrent :call  CocAction('runCommand', 'jest.fileTest', ['%'])
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -201,27 +143,73 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-"
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"********** Airline settings *************
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+" Additional settings
+syntax on                " Enable syntax highlighting
+filetype plugin indent on " Enable file type detection and plugins
+
+"Ctrl + direction to change panes
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+
+"Remap esc to 'fj' or 'jf'
+imap fj <esc>
+imap jf <esc>
+
+"map :Q & :W to :q and :w for easier 'write' and 'quite'
+noremap :Q :q
+noremap :W :w
+
+"more room for displaying messages
+set cmdheight=2
+"shorter updatetime
+set updatetime=300
+
+" turn off search highlighting with leader <space>
+noremap <leader><space> :nohlsearch<CR>
 
 "********** Emmet *************
-" Press Ctrl-z, to expand tags
-let g:user_emmet_leader_key='<C-Z>'
+" Press "Ctrl-z," to expand tags. Don't forget the comma!
+let g:user_emmet_leader_key='<C-e>'
+
+"********** GitGutter *************
+nmap <leader>p  <Plug>(GitGutterPreviewHunk)
+nmap <leader>s  <Plug>(GitGutterStageHunk)
+nmap <leader>u  <Plug>(GitGutterUndoHunk)
+
+noremap <leader>gb :G blame<cr>
+
+"******** vim-javaScript *************
+" Enables syntax highlighting for JSDocs.
+let g:javascript_plugin_jsdoc = 1
+
+"*********** Github Copilot Chat *************
+" Toggle the chat window
+nmap <leader>cc  :CopilotChatToggle<CR>
+" Review the selected code
+nmap <leader>cr  :CopilotChatReview<CR>
+" add documentation to the selected code
+nmap <leader>cd  ::CopilotChatDocs<CR>
 
 
-"********** Undo Tree **********
-" noremap <leader>u :UndotreeToggle<CR>
+" Appearance
+set t_Co=256
+set termguicolors       " Enable 24-bit RGB colors
+set background=dark     " Set background to dark
+colorscheme tokyonight
+"sync syntax highlighting for large files
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
-highlight LineNr guifg=white
+
+lua << EOF
+require("CopilotChat").setup {
+  debug = true, -- Enable debugging
+  -- See Configuration section for rest
+}
+E

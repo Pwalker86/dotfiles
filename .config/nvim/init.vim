@@ -1,32 +1,8 @@
-" Basic settings
-set number              " Show line numbers
-set relativenumber      " Show relative line numbers
-set tabstop=2           " Number of spaces that a <Tab> in the file counts for
-set shiftwidth=2        " Number of spaces to use for each step of (auto)indent
-set expandtab           " Use spaces instead of tabs
-set smartindent         " Smart autoindenting when starting a new line
-set autoindent          " Copy indent from current line when starting a new line
-set wrap                " Wrap long lines
-set cursorline          " Highlight the current line
-set cursorcolumn
-set clipboard=unnamedplus " Use system clipboard
-set mouse=a             " Enable mouse support
-set splitbelow splitright " split down and to the right
-set wildmenu
-set wildmode=longest:full,full
-
-" Search settings
-set ignorecase          " Ignore case when searching
-set smartcase           " Override ignorecase if search pattern contains uppercase
-set incsearch           " Show search matches as you type
-set hlsearch            " Highlight search matches
-
-
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 
 " Add your plugins here
-" Plug 'burntsushi/ripgrep'
+Plug 'burntsushi/ripgrep'
 Plug 'wincent/ferret'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
 Plug 'junegunn/fzf.vim', {
@@ -45,10 +21,6 @@ Plug 'junegunn/fzf.vim', {
             \ 'BLines',
             \ 'Marks'
         \ ] }
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
-" or                                , { 'branch': '0.1.x' }
-" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-fugitive'
@@ -64,15 +36,53 @@ Plug 'vim-airline/vim-airline'   " Status bar
 Plug 'vim-airline/vim-airline-themes' " Status bar themes
 Plug 'mattn/emmet-vim'
 Plug 'folke/tokyonight.nvim'
+Plug 'olimorris/onedarkpro.nvim'  
 Plug 'zbirenbaum/copilot.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'nvim-treesitter/nvim-treesitter'
 
 call plug#end()
-"
+
+" Basic settings
+set number              " Show line numbers
+set relativenumber      " Show relative line numbers
+set tabstop=2           " Number of spaces that a <Tab> in the file counts for
+set shiftwidth=2        " Number of spaces to use for each step of (auto)indent
+set expandtab           " Use spaces instead of tabs
+set smartindent         " Smart autoindenting when starting a new line
+set autoindent          " Copy indent from current line when starting a new line
+set wrap                " Wrap long lines
+set clipboard=unnamedplus " Use system clipboard
+set mouse=a             " Enable mouse support
+set splitbelow splitright " split down and to the right
+set wildmenu
+set wildmode=longest:full,full
+
+" Search settings
+set ignorecase          " Ignore case when searching
+set smartcase           " Override ignorecase if search pattern contains uppercase
+set incsearch           " Show search matches as you type
+set hlsearch            " Highlight search matches
+
+" Appearance
+set t_Co=256
+set termguicolors       " Enable 24-bit RGB colors
+" colorscheme onedark_dark
+colorscheme tokyonight
+set cursorline          " Highlight the current line
+highlight CursorLine gui=underline cterm=underline ctermfg=NONE ctermbg=NONE
+set cursorcolumn
+" highlight CursorColumn ctermbg=0 guibg=lightgrey
+
+if &term =~ 'xterm\\|rxvt\\|screen\\|kitty'
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[6 q"
+endif
+
 "******** RipGrep settings *************
 "use RipGrep with /a
-" nmap <leader>a :Rg 
+nmap <leader>a :Rg 
 
 "******* fzf settings *********
 " " initialize fzf setting dictionary
@@ -80,30 +90,16 @@ call plug#end()
 
 
 " Use fd to list files, respecting .gitignore, and limit search to the current project directory
-let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
+let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude .git'
 ""searches files while respecting .gitignore
 noremap <C-p> :Files<Cr>
 ""searches open files
-noremap <Leader>b :Buffers<cr>
+" noremap <Leader>b :Buffers<cr>
+noremap <A-p> :Buffers<cr>
 ""searches current file
 noremap <Leader>l :BLines<cr>
 
 let g:fzf_layout = {'down': '~40%'}
-"
-" ********** Telescope settings *************
-" -- To get fzf loaded and working with telescope, you need to call
-" -- load_extension, somewhere after setup function:
-"
-" lua << EOF
-" require('telescope').load_extension('fzf')
-" EOF
-
-" Use <leader>ff to find files
-" nnoremap <leader>ff <cmd>Telescope find_files<cr>
-" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-" nnoremap <leader>fb <cmd>Telescope buffers<cr>
-" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 
 "********** NERDTree settings *************
 "Toggle NERDTree with leader+e
@@ -197,14 +193,11 @@ nmap <leader>cr  :CopilotChatReview<CR>
 nmap <leader>cd  ::CopilotChatDocs<CR>
 
 
-" Appearance
-set t_Co=256
-set termguicolors       " Enable 24-bit RGB colors
-set background=dark     " Set background to dark
-colorscheme tokyonight
 "sync syntax highlighting for large files
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+let g:python3_host_prog = '/usr/bin/python3'
 
 
 lua << EOF

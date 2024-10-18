@@ -37,9 +37,9 @@ Plug 'vim-airline/vim-airline-themes' " Status bar themes
 Plug 'mattn/emmet-vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'olimorris/onedarkpro.nvim'  
-Plug 'zbirenbaum/copilot.lua'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+" Plug 'zbirenbaum/copilot.lua'  " Copilot chat dependency
+" Plug 'nvim-lua/plenary.nvim'   " Copilot chat dependency
+" Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'nvim-treesitter/nvim-treesitter'
 
 call plug#end()
@@ -200,9 +200,9 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 let g:python3_host_prog = '/usr/bin/python3'
 
 
-lua << EOF
-require("CopilotChat").setup {
-  debug = true, -- Enable debugging
-  -- See Configuration section for rest
-}
-EOF
+" lua << EOF
+" require("CopilotChat").setup {
+"   debug = true, -- Enable debugging
+"   -- See Configuration section for rest
+" }
+" EOF

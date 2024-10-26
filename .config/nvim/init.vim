@@ -9,6 +9,7 @@ Plug 'junegunn/fzf.vim', {
     \ 'on': [
             \ 'Ag',
             \ 'Rg',
+            \ 'GFiles',
             \ 'FZF',
             \ 'Files',
             \ 'Buffers',
@@ -28,7 +29,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails'
-Plug 'github/copilot.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine
 Plug 'preservim/nerdtree'        " File explorer
 Plug 'airblade/vim-gitgutter'    " Git diff in the sign column
@@ -37,10 +37,12 @@ Plug 'vim-airline/vim-airline-themes' " Status bar themes
 Plug 'mattn/emmet-vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'olimorris/onedarkpro.nvim'  
-" Plug 'zbirenbaum/copilot.lua'  " Copilot chat dependency
-" Plug 'nvim-lua/plenary.nvim'   " Copilot chat dependency
-" Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'github/copilot.vim'  " used for copilot in editor
+Plug 'zbirenbaum/copilot.lua'  " used for Copilot Chat
+Plug 'nvim-lua/plenary.nvim'   " used for Copilot Chat
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'universal-ctags/ctags'
 
 call plug#end()
 
@@ -73,7 +75,6 @@ colorscheme tokyonight
 set cursorline          " Highlight the current line
 highlight CursorLine gui=underline cterm=underline ctermfg=NONE ctermbg=NONE
 set cursorcolumn
-" highlight CursorColumn ctermbg=0 guibg=lightgrey
 
 if &term =~ 'xterm\\|rxvt\\|screen\\|kitty'
   let &t_SI = "\e[6 q"
@@ -87,12 +88,18 @@ nmap <leader>a :Rg
 "******* fzf settings *********
 " " initialize fzf setting dictionary
 " let g:fzf_vim = {}
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit', 
+  \ }
 
 
 " Use fd to list files, respecting .gitignore, and limit search to the current project directory
+" let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude "!{node_modules/*, .git/*, .yarn/*, .cache/*}"'
 let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude .git'
 ""searches files while respecting .gitignore
-noremap <C-p> :Files<Cr>
+noremap <C-p> :GFiles<Cr>
 ""searches open files
 " noremap <Leader>b :Buffers<cr>
 noremap <A-p> :Buffers<cr>
@@ -200,9 +207,9 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 let g:python3_host_prog = '/usr/bin/python3'
 
 
-" lua << EOF
-" require("CopilotChat").setup {
-"   debug = true, -- Enable debugging
-"   -- See Configuration section for rest
-" }
-" EOF
+lua << EOF
+require("CopilotChat").setup {
+  debug = true, -- Enable debugging
+  -- See Configuration section for rest
+}
+EOF

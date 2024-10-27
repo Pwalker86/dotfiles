@@ -110,6 +110,24 @@ alias gc='git commit'
 alias gcane='git commit --amend --no-edit'
 alias ga='git add'
 
+# Function to compare versions
+version_gt() {
+  [ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" ]
+}
+
+# Get the fzf version
+fzf_version=$(fzf --version | awk '{print $1}')
+
+# Desired version to compare against
+required_version="0.48"
+
+# Check if fzf version is greater than required version
+if version_gt "$fzf_version" "$required_version"; then
+  # Place the command you want to execute here
+  echo "fzf version is greater than $required_version"
+  # Example command
+  source <(fzf --zsh)
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -117,8 +135,6 @@ export NVM_DIR="$HOME/.nvm"
 # eval "$(~/.rbenv/bin/rbenv init - bash)"
 # eval "$(luarocks --lua-version=5.4 config --local variables.LUA /usr/local/bin/lua)"
 export EDITOR='nvim'
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
 export PATH="$HOME/.local/bin:$PATH"
 . "$HOME/.cargo/env"
 eval "$(/home/philwalker/.local/bin/mise activate zsh)"

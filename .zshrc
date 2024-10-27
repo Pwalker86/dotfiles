@@ -83,14 +83,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
@@ -99,10 +96,6 @@ source $ZSH/oh-my-zsh.sh
 # - $ZSH_CUSTOM/aliases.zsh
 # - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 alias vim='nvim'
 alias gs='git status'
@@ -123,18 +116,15 @@ required_version="0.48"
 
 # Check if fzf version is greater than required version
 if version_gt "$fzf_version" "$required_version"; then
-  # Place the command you want to execute here
   echo "fzf version is greater than $required_version"
-  # Example command
   source <(fzf --zsh)
 fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# eval "$(~/.rbenv/bin/rbenv init - bash)"
 # eval "$(luarocks --lua-version=5.4 config --local variables.LUA /usr/local/bin/lua)"
-export EDITOR='nvim'
+export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.local/bin:$PATH"
 . "$HOME/.cargo/env"
 eval "$(/home/philwalker/.local/bin/mise activate zsh)"

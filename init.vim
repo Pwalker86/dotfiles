@@ -97,7 +97,7 @@ let g:fzf_action = {
 " Use fd to list files, respecting .gitignore, and limit search to the current project directory
 let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude .git'
 ""searches files while respecting .gitignore
-noremap <C-p> :GFiles<Cr>
+noremap <C-p> :Files<Cr>
 ""searches open files
 " noremap <Leader>b :Buffers<cr>
 noremap <A-p> :Buffers<cr>

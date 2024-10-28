@@ -128,3 +128,5 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.local/bin:$PATH"
 . "$HOME/.cargo/env"
 eval "$(/home/philwalker/.local/bin/mise activate zsh)"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

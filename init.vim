@@ -42,6 +42,7 @@ Plug 'zbirenbaum/copilot.lua'  " used for Copilot Chat
 Plug 'nvim-lua/plenary.nvim'   " used for Copilot Chat
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'eslint/eslint'
 
 call plug#end()
 

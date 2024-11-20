@@ -56,7 +56,7 @@ set expandtab           " Use spaces instead of tabs
 set smartindent         " Smart autoindenting when starting a new line
 set autoindent          " Copy indent from current line when starting a new line
 set wrap                " Wrap long lines
-set clipboard=unnamedplus " Use system clipboard
+set clipboard+=unnamedplus " Use system clipboard
 set mouse=a             " Enable mouse support
 set splitbelow splitright " split down and to the right
 set wildmenu

@@ -71,7 +71,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting wd asdf rails ruby)
+plugins=(git zsh-syntax-highlighting wd rails ruby mise)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -135,3 +135,5 @@ eval "$($HOME/.local/bin/mise activate zsh)"
 eval "$(zoxide init zsh)"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

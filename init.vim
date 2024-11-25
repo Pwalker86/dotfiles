@@ -4,24 +4,25 @@ call plug#begin('~/.config/nvim/plugged')
 " Add your plugins here
 Plug 'burntsushi/ripgrep'
 Plug 'wincent/ferret'
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
-Plug 'junegunn/fzf.vim', {
-    \ 'on': [
-            \ 'Ag',
-            \ 'Rg',
-            \ 'GFiles',
-            \ 'FZF',
-            \ 'Files',
-            \ 'Buffers',
-            \ 'Commits',
-            \ 'BCommits',
-            \ 'Tags',
-            \ 'BTags',
-            \ 'History',
-            \ 'Lines',
-            \ 'BLines',
-            \ 'Marks'
-        \ ] }
+" Plug 'junegunn/fzf.vim', {
+"     \ 'on': [
+"             \ 'Ag',
+"             \ 'Rg',
+"             \ 'GFiles',
+"             \ 'FZF',
+"             \ 'Files',
+"             \ 'Buffers',
+"             \ 'Commits',
+"             \ 'BCommits',
+"             \ 'Tags',
+"             \ 'BTags',
+"             \ 'History',
+"             \ 'Lines',
+"             \ 'BLines',
+"             \ 'Marks'
+"         \ ] }
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-fugitive'
@@ -44,6 +45,8 @@ Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'eslint/eslint'
 Plug 'alvan/vim-closetag'
+Plug 'echasnovski/mini.nvim'
+Plug 'echasnovski/mini.icons'
 
 call plug#end()
 
@@ -99,12 +102,15 @@ let g:fzf_action = {
 " Use fd to list files, respecting .gitignore, and limit search to the current project directory
 let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude .git'
 ""searches files while respecting .gitignore
-noremap <C-p> :Files<Cr>
+" noremap <C-p> :Files<Cr>
+noremap <C-p> :FzfLua files<Cr>
 ""searches open files
 " noremap <Leader>b :Buffers<cr>
-noremap <A-p> :Buffers<cr>
+" noremap <A-p> :Buffers<cr>
+noremap <A-p> :FzfLua buffers<cr>
 ""searches current file
-noremap <Leader>l :BLines<cr>
+" noremap <Leader>l :BLines<cr>
+noremap <Leader>l :FzfLua blines<cr>
 
 let g:fzf_layout = {'down': '~40%'}
 
@@ -246,6 +252,8 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 
 lua << EOF
+require("fzf-lua").setup()
+require('mini.icons').setup()
 require("CopilotChat").setup {
   debug = true, -- Enable debugging
   -- See Configuration section for rest

@@ -102,6 +102,7 @@ alias gs='git status'
 alias gc='git commit'
 alias gcane='git commit --amend --no-edit'
 alias ga='git add'
+alias cd='z'
 
 # Function to compare versions
 version_gt() {
@@ -126,10 +127,11 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# eval "$(luarocks --lua-version=5.4 config --local variables.LUA /usr/local/bin/lua)"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.local/bin:$PATH"
-. "$HOME/.cargo/env"
-eval "$(/home/philwalker/.local/bin/mise activate zsh)"
+# . "$HOME/.cargo/env"
+export EDITOR='nvim'
+eval "$($HOME/.local/bin/mise activate zsh)"
+eval "$(zoxide init zsh)"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

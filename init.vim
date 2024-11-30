@@ -47,6 +47,7 @@ Plug 'eslint/eslint'
 Plug 'alvan/vim-closetag'
 Plug 'echasnovski/mini.nvim'
 Plug 'echasnovski/mini.icons'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -173,6 +174,8 @@ imap jf <esc>
 "map :Q & :W to :q and :w for easier 'write' and 'quite'
 noremap :Q :q
 noremap :W :w
+noremap :Bd :bd
+noremap :BD :bd
 
 "more room for displaying messages
 set cmdheight=2
@@ -250,6 +253,13 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 let g:python3_host_prog = '/usr/bin/python3'
 
+"********** ALE settings *************
+let g:ale_fixers = {
+\   'eruby': ['erb-formatter'],
+\}
+let g:ale_lint_on_text_changed='never'
+let g:ale_fix_on_save = 1
+
 
 lua << EOF
 require("fzf-lua").setup()
@@ -261,6 +271,9 @@ require("CopilotChat").setup {
 require("nvim-treesitter.configs").setup {
  ensure_installed = { "javascript", "json", "html", "css", "typescript", "tsx" },
  highlight = {
+   enable = true,
+ },
+ endwise = {
    enable = true,
  }
 }

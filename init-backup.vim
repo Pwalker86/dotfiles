@@ -4,24 +4,25 @@ call plug#begin('~/.config/nvim/plugged')
 " Add your plugins here
 Plug 'burntsushi/ripgrep'
 Plug 'wincent/ferret'
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
-Plug 'junegunn/fzf.vim', {
-    \ 'on': [
-            \ 'Ag',
-            \ 'Rg',
-            \ 'GFiles',
-            \ 'FZF',
-            \ 'Files',
-            \ 'Buffers',
-            \ 'Commits',
-            \ 'BCommits',
-            \ 'Tags',
-            \ 'BTags',
-            \ 'History',
-            \ 'Lines',
-            \ 'BLines',
-            \ 'Marks'
-        \ ] }
+" Plug 'junegunn/fzf.vim', {
+"     \ 'on': [
+"             \ 'Ag',
+"             \ 'Rg',
+"             \ 'GFiles',
+"             \ 'FZF',
+"             \ 'Files',
+"             \ 'Buffers',
+"             \ 'Commits',
+"             \ 'BCommits',
+"             \ 'Tags',
+"             \ 'BTags',
+"             \ 'History',
+"             \ 'Lines',
+"             \ 'BLines',
+"             \ 'Marks'
+"         \ ] }
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-fugitive'
@@ -42,6 +43,11 @@ Plug 'zbirenbaum/copilot.lua'  " used for Copilot Chat
 Plug 'nvim-lua/plenary.nvim'   " used for Copilot Chat
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'eslint/eslint'
+Plug 'alvan/vim-closetag'
+Plug 'echasnovski/mini.nvim'
+Plug 'echasnovski/mini.icons'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -54,7 +60,7 @@ set expandtab           " Use spaces instead of tabs
 set smartindent         " Smart autoindenting when starting a new line
 set autoindent          " Copy indent from current line when starting a new line
 set wrap                " Wrap long lines
-set clipboard=unnamedplus " Use system clipboard
+set clipboard+=unnamedplus " Use system clipboard
 set mouse=a             " Enable mouse support
 set splitbelow splitright " split down and to the right
 set wildmenu
@@ -97,12 +103,15 @@ let g:fzf_action = {
 " Use fd to list files, respecting .gitignore, and limit search to the current project directory
 let $FZF_DEFAULT_COMMAND = 'fdfind --type f --hidden --follow --exclude .git'
 ""searches files while respecting .gitignore
-noremap <C-p> :GFiles<Cr>
+" noremap <C-p> :Files<Cr>
+noremap <C-p> :FzfLua files<Cr>
 ""searches open files
 " noremap <Leader>b :Buffers<cr>
-noremap <A-p> :Buffers<cr>
+" noremap <A-p> :Buffers<cr>
+noremap <A-p> :FzfLua buffers<cr>
 ""searches current file
-noremap <Leader>l :BLines<cr>
+" noremap <Leader>l :BLines<cr>
+noremap <Leader>l :FzfLua blines<cr>
 
 let g:fzf_layout = {'down': '~40%'}
 
@@ -165,6 +174,8 @@ imap jf <esc>
 "map :Q & :W to :q and :w for easier 'write' and 'quite'
 noremap :Q :q
 noremap :W :w
+noremap :Bd :bd
+noremap :BD :bd
 
 "more room for displaying messages
 set cmdheight=2
@@ -175,7 +186,7 @@ set updatetime=300
 noremap <leader><space> :nohlsearch<CR>
 
 "********** Emmet *************
-" Press "Ctrl-z," to expand tags. Don't forget the comma!
+" Press "Ctrl-e," to expand tags. Don't forget the comma!
 let g:user_emmet_leader_key='<C-e>'
 
 "********** GitGutter *************
@@ -198,22 +209,72 @@ nmap <leader>cr  :CopilotChatReview<CR>
 nmap <leader>cd  :CopilotChatDocs<CR>
 
 
+"************CloseTag options **********8
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js, *.jsx'
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml,js, jsx'
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx, js'
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while`<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \ }
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+
+
 "sync syntax highlighting for large files
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 let g:python3_host_prog = '/usr/bin/python3'
 
+"********** ALE settings *************
+let g:ale_fixers = {
+\   'eruby': ['erb-formatter'],
+\}
+let g:ale_lint_on_text_changed='never'
+let g:ale_fix_on_save = 1
+
 
 lua << EOF
+require("fzf-lua").setup()
+require('mini.icons').setup()
 require("CopilotChat").setup {
   debug = true, -- Enable debugging
   -- See Configuration section for rest
 }
+require("nvim-treesitter.configs").setup {
+ ensure_installed = { "javascript", "json", "html", "css", "typescript", "tsx" },
+ highlight = {
+   enable = true,
+ },
+ endwise = {
+   enable = true,
+ }
+}
 EOF
-" require("nvim-treesitter.configs").setup {
-"   ensure_installed = { "javascript", "json", "html", "css", "typescript", "tsx" },
-"   highlight = {
-"     enable = true,
-"   }
-" }

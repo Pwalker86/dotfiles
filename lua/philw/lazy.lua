@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{ import = "philw.plugins" },
 	{ import = "philw.plugins.lsp" },
-	{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+	-- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 	-- { import = "lazyvim.plugins.extras.lang.ruby" },
 }, {
 	install = {
@@ -32,40 +32,3 @@ require("lazy").setup({
 		notify = false,
 	},
 })
-
--- set tab to insert 2 spaces
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.smartindent = true
-vim.opt.autoindent = true
-
--- Show line numbers
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- Split settings
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
--- Search settings
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.incsearch = true
-vim.opt.hlsearch = true
-
--- Key mappings
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true })
-
-vim.api.nvim_set_keymap("i", "fj", "<esc>", { noremap = true })
-vim.api.nvim_set_keymap("i", "jf", "<esc>", { noremap = true })
-
-vim.api.nvim_set_keymap("n", ":Q", ":q", { noremap = true })
-vim.api.nvim_set_keymap("n", ":W", ":w", { noremap = true })
-
--- Disable Copilot completions
-vim.g.copilot_enabled = false

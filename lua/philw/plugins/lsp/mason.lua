@@ -23,8 +23,6 @@ return {
 			ensure_installed = {
 				"html",
 				"lua_ls",
-				"erb-formatter",
-				"erb-lint",
 			},
 			-- auto-install the configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed.

@@ -41,7 +41,7 @@ Plug 'olimorris/onedarkpro.nvim'
 Plug 'github/copilot.vim'  " used for copilot in editor
 Plug 'zbirenbaum/copilot.lua'  " used for Copilot Chat
 Plug 'nvim-lua/plenary.nvim'   " used for Copilot Chat
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'eslint/eslint'
 Plug 'alvan/vim-closetag'
@@ -256,6 +256,7 @@ let g:python3_host_prog = '/usr/bin/python3'
 "********** ALE settings *************
 let g:ale_fixers = {
 \   'eruby': ['erb-formatter'],
+\   'ruby': ['rubocop'],
 \}
 let g:ale_lint_on_text_changed='never'
 let g:ale_fix_on_save = 1

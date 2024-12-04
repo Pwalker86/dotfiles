@@ -18,8 +18,8 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{ import = "philw.plugins" },
 	{ import = "philw.plugins.lsp" },
-	-- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-	-- { import = "lazyvim.plugins.extras.lang.ruby" },
+	{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+	{ import = "lazyvim.plugins.extras.lang.ruby" },
 }, {
 	install = {
 		colorscheme = { "tokyonight" },

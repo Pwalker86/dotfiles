@@ -8,14 +8,11 @@ return {
 	opts = {
 		---@type lspconfig.options
 		servers = {
-			solargraph = {
-				enabled = lsp == "solargraph",
+			ruby_lsp = {
+				enabled = lsp == "ruby_lsp",
 			},
 			rubocop = {
-				-- If Solargraph and Rubocop are both enabled as an LSP,
-				-- diagnostics will be duplicated because Solargraph
-				-- already calls Rubocop if it is installed
-				enabled = formatter == "rubocop" and lsp ~= "solargraph",
+				enabled = formatter == "rubocop",
 			},
 		},
 	},
@@ -105,7 +102,7 @@ return {
 			},
 		})
 
-		lspconfig["solargraph"].setup({
+		lspconfig["ruby_lsp"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = { "ruby" },

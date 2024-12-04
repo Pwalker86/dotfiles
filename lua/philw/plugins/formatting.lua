@@ -13,7 +13,7 @@ return {
 				html = { "prettier" },
 				json = { "prettier" },
 				lua = { "stylua" },
-				ruby = { "rubocop" },
+				ruby = { formatter },
 				eruby = { "erb_format" },
 			},
 			format_on_save = {

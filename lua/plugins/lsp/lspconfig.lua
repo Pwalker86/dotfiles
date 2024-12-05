@@ -114,11 +114,11 @@ return {
 			filetypes = { "ruby" },
 		})
 
-		lspconfig["erb-lint"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "eruby" },
-		})
+		-- lspconfig["erb-lint"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	filetypes = { "eruby" },
+		-- })
 
 		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,

@@ -105,7 +105,7 @@ return {
 		lspconfig["stimulus_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = { "html", "ruby", "eruby" },
+			filetypes = { "html", "eruby", "javascript" },
 		})
 
 		lspconfig["ruby_lsp"].setup({

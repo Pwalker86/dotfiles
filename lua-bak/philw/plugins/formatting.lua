@@ -9,11 +9,12 @@ return {
 				typescript = { "prettier" },
 				javascriptreact = { "prettier" },
 				typescriptreact = { "prettier" },
+				yaml = { "yamlfix" },
 				css = { "prettier" },
 				html = { "prettier" },
 				json = { "prettier" },
 				lua = { "stylua" },
-				ruby = { formatter },
+				ruby = { "rubocop" },
 				eruby = { "erb_format" },
 			},
 			format_on_save = {

@@ -128,6 +128,7 @@ return {
 		lspconfig["cssls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			filetypes = { "css", "scss", "less" },
 		})
 
 		lspconfig["bashls"].setup({
@@ -135,10 +136,10 @@ return {
 			on_attach = on_attach,
 		})
 
-		lspconfig["emmet_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "css", "eruby", "html", "javascriptreact", "scss", "typescriptreact" },
-		})
+		-- lspconfig["emmet_ls"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	filetypes = { "css", "eruby", "html", "javascriptreact", "scss", "typescriptreact" },
+		-- })
 	end,
 }

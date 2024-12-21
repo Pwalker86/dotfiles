@@ -104,6 +104,7 @@ alias gcane='git commit --amend --no-edit'
 alias ga='git add'
 alias cd='z'
 alias lg='lazygit'
+alias ber='bundle exec rspec'
 
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
@@ -138,3 +139,4 @@ if version_gt "$fzf_version" "$required_version"; then
   source <(fzf --zsh)
 fi
 
+# eval "$(zellij setup --generate-auto-start zsh)"

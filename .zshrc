@@ -105,6 +105,7 @@ alias ga='git add'
 alias cd='z'
 alias lg='lazygit'
 alias ber='bundle exec rspec'
+alias tf="thefuck"
 
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
@@ -116,6 +117,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
 eval "$($HOME/.local/bin/mise activate zsh)"
 eval "$(zoxide init zsh)"
+# eval $(thefuck --alias)
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 

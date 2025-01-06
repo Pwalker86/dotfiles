@@ -142,3 +142,7 @@ if version_gt "$fzf_version" "$required_version"; then
 fi
 
 # eval "$(zellij setup --generate-auto-start zsh)"
+eval "$(/home/phil/.local/bin/mise activate zsh)"
+eval "$(~/.local/bin/mise activate)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

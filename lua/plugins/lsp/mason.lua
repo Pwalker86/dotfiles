@@ -18,6 +18,8 @@ return {
 			},
 		})
 
-		mason_lspconfig.setup()
+		mason_lspconfig.setup({
+			ensure_installed = { "ruby_lsp", "rubocop" },
+		})
 	end,
 }

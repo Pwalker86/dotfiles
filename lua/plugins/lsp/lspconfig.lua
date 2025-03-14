@@ -111,7 +111,17 @@ return {
 		lspconfig["ruby_lsp"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = { "ruby" },
+			filetypes = { "ruby", "thor" },
+		})
+
+		lspconfig["rubocop"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				rubocop = {
+					autocorrect = true,
+				},
+			},
 		})
 
 		-- lspconfig["erb-lint"].setup({
@@ -134,6 +144,25 @@ return {
 		lspconfig["bashls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+		})
+
+		lspconfig["tailwindcss"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			filetypes = {
+				"html",
+				"erb",
+				"eruby",
+				"javascript",
+				"typescript",
+				"typescriptreact",
+				"javascriptreact",
+				"svelte",
+				"vue",
+				"css",
+				"scss",
+				"less",
+			},
 		})
 
 		-- lspconfig["emmet_ls"].setup({

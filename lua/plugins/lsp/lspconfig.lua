@@ -135,6 +135,11 @@ return {
 			on_attach = on_attach,
 		})
 
+		lspconfig["jsonls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
 		lspconfig["cssls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,

@@ -147,3 +147,6 @@ eval "$(/home/phil/.local/bin/mise activate zsh)"
 eval "$(~/.local/bin/mise activate)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/home/phil/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;

@@ -12,7 +12,7 @@ return {
 
 				-- Add Rails specific snippets
 				require("luasnip.loaders.from_vscode").lazy_load({
-					paths = { "./snippets/rails" },
+					paths = { "../../../snippets/rails/" },
 				})
 			end,
 		},
@@ -24,6 +24,9 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
+
+		require("luasnip.loaders.from_vscode").lazy_load()
+		require("luasnip").filetype_extend("ruby", { "rails" })
 
 		cmp.setup({
 			snippet = {
@@ -82,4 +85,3 @@ return {
 		})
 	end,
 }
-

@@ -20,7 +20,6 @@ vim.opt.rtp:prepend(lazypath)
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.keymap.set("n", "<leader>o", "<cmd>Oil --float<cr>", { desc = "Open Oil in a floating window" })
 
 -- Setup lazy.nvim
 require("lazy").setup({

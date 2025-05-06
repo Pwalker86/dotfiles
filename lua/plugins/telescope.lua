@@ -1,34 +1,31 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+    keys = {
+      { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
+      { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent Files" },
+    },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 	},
-	config = function()
+    opts = {
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case",
+        },
+      },
+    },
+	config = function(_, opts)
 		local telescope = require("telescope")
-		local actions = require("telescope.actions")
 
-		telescope.setup({
-			defaults = {
-				mappings = {
-					i = {
-						["<C-k>"] = actions.move_selection_previous, --move to prev result
-						["<C-j>"] = actions.move_selection_next, -- move to next result
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-					},
-				},
-			},
-		})
-
+		telescope.setup(opts)
 		telescope.load_extension("fzf")
-
-		-- set keymaps
-		local keymap = vim.keymap -- for conciseness
-
-		keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 	end,
 }

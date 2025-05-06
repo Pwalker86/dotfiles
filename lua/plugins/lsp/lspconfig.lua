@@ -4,6 +4,8 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
+    -- Useful status updates for LSP
+    { "j-hui/fidget.nvim", opts = {} },
 	},
 	opts = {
 		---@type lspconfig.options
@@ -17,8 +19,32 @@ return {
 		},
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+    -- Configure diagnostics display
+    vim.diagnostic.config({
+      virtual_text = true,
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+      float = {
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+    })
+
+    -- Add borders to LSP windows
+    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+      opts = opts or {}
+      opts.border = opts.border or "rounded"
+      return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    end
+    
+    local lspconfig = require("lspconfig")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		local keymap = vim.keymap
 
 		local opts = { noremap = true, silent = true }
@@ -66,9 +92,6 @@ return {
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 		end
 
-		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
-
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		local signs = { Error = "✗", Warn = "!", Hint = "+", Info = "i" }
 		for type, icon in pairs(signs) do
@@ -77,12 +100,13 @@ return {
 		end
 
 		-- configure html server
-		lspconfig["html"].setup({
+		lspconfig.html.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+      filetypes = {"html", "eruby"}
 		})
 
-		lspconfig["lua_ls"].setup({
+		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = { -- custom settings for lua
@@ -102,19 +126,31 @@ return {
 			},
 		})
 
-		lspconfig["stimulus_ls"].setup({
+		lspconfig.stimulus_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = { "html", "eruby", "javascript" },
 		})
 
-		lspconfig["ruby_lsp"].setup({
+    -- Ruby LSP configuration
+    lspconfig.solargraph.setup({
+      capabilities = capabilities,
+      settings = {
+        solargraph = {
+          diagnostics = true,
+          completion = true,
+          formatting = true,
+        }
+      }
+    })
+
+		lspconfig.ruby_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = { "ruby", "thor" },
 		})
 
-		lspconfig["rubocop"].setup({
+		lspconfig.rubocop.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -124,34 +160,28 @@ return {
 			},
 		})
 
-		-- lspconfig["erb-lint"].setup({
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- 	filetypes = { "eruby" },
-		-- })
-
-		lspconfig["ts_ls"].setup({
+		lspconfig.ts_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 
-		lspconfig["jsonls"].setup({
+		lspconfig.jsonls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 
-		lspconfig["cssls"].setup({
+		lspconfig.cssls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = { "css", "scss", "less" },
 		})
 
-		lspconfig["bashls"].setup({
+		lspconfig.bashls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 
-		lspconfig["tailwindcss"].setup({
+		lspconfig.tailwindcss.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			filetypes = {

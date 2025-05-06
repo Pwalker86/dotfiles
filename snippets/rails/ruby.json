@@ -1,0 +1,174 @@
+{
+  "Rails controller": {
+    "prefix": "rcontroller",
+    "body": [
+      "class ${1:Name}Controller < ApplicationController",
+      "  before_action :set_${2:model}, only: [:show, :edit, :update, :destroy]",
+      "",
+      "  def index",
+      "    @${3:models} = ${4:Model}.all",
+      "  end",
+      "",
+      "  def show",
+      "  end",
+      "",
+      "  def new",
+      "    @$2 = ${4:Model}.new",
+      "  end",
+      "",
+      "  def edit",
+      "  end",
+      "",
+      "  def create",
+      "    @$2 = ${4:Model}.new($2_params)",
+      "",
+      "    if @$2.save",
+      "      redirect_to @$2, notice: '${5:Model was successfully created.}'",
+      "    else",
+      "      render :new",
+      "    end",
+      "  end",
+      "",
+      "  def update",
+      "    if @$2.update($2_params)",
+      "      redirect_to @$2, notice: '${6:Model was successfully updated.}'",
+      "    else",
+      "      render :edit",
+      "    end",
+      "  end",
+      "",
+      "  def destroy",
+      "    @$2.destroy",
+      "    redirect_to ${3:models}_url, notice: '${7:Model was successfully destroyed.}'",
+      "  end",
+      "",
+      "  private",
+      "    def set_$2",
+      "      @$2 = ${4:Model}.find(params[:id])",
+      "    end",
+      "",
+      "    def $2_params",
+      "      params.require(:$2).permit(${8:attributes})",
+      "    end",
+      "end"
+    ],
+    "description": "Rails controller scaffold"
+  },
+  "Rails model": {
+    "prefix": "rmodel",
+    "body": [
+      "class ${1:Name} < ApplicationRecord",
+      "  ${2:# Associations}",
+      "  ${3:has_many :${4:association}}",
+      "",
+      "  ${5:# Validations}",
+      "  ${6:validates :${7:attribute}, presence: true}",
+      "",
+      "  ${8:# Callbacks}",
+      "  ${9:before_save :${10:method}}",
+      "",
+      "  ${11:# Scopes}",
+      "  ${12:scope :${13:name}, -> { where(${14:conditions}) \\}}",
+      "",
+      "  ${0:# Methods}",
+      "end"
+    ],
+    "description": "Rails model scaffold"
+  },
+  "Rails migration": {
+    "prefix": "rmigration",
+    "body": [
+      "class ${1:CreateTable} < ActiveRecord::Migration[${2:7.0}]",
+      "  def change",
+      "    ${3:create_table :${4:table_name}} do |t|",
+      "      t.${5:string} :${6:name}",
+      "      t.${7:text} :${8:description}",
+      "      $0",
+      "      t.timestamps",
+      "    end",
+      "  end",
+      "end"
+    ],
+    "description": "Rails migration"
+  },
+  "test minitest": {
+    "prefix": "mintest",
+    "body": [
+      "require \"test_helper\"",
+      "",
+      "class ${1:Model}Test < ActiveSupport::TestCase",
+      "  setup do",
+      "    @${2:model} = ${3:Model}.new",
+      "  end",
+      "",
+      "  test \"${4:should be valid}\" do",
+      "    assert @$2.valid?",
+      "  end",
+      "  $0",
+      "end"
+    ],
+    "description": "Minitest test class"
+  },
+  "controller minitest": {
+    "prefix": "conmintest",
+    "body": [
+      "require \"test_helper\"",
+      "",
+      "class ${1:Model}ControllerTest < ActionDispatch::IntegrationTest",
+      "  setup do",
+      "    @${2:model} = ${3:$1}.create!(${4:valid_attributes})",
+      "  end",
+      "",
+      "  test \"should get index\" do",
+      "    get ${5:$2}s_url",
+      "    assert_response :success",
+      "  end",
+      "",
+      "  test \"should get new\" do",
+      "    get new_$2_url",
+      "    assert_response :success",
+      "  end",
+      "",
+      "  test \"should create $2\" do",
+      "    assert_difference(\"$3.count\") do",
+      "      post ${5:$2}s_url, params: { $2: { ${6:attribute: value} } }",
+      "    end",
+      "",
+      "    assert_redirected_to $2_url($3.last)",
+      "  end",
+      "  $0",
+      "end"
+    ],
+    "description": "Minitest controller test"
+  },
+  "Rails has_many": {
+    "prefix": "hasmany",
+    "body": ["has_many :${1:association}, dependent: :${2:destroy}"],
+    "description": "has_many association"
+  },
+  "Rails belongs_to": {
+    "prefix": "belongsto",
+    "body": ["belongs_to :${1:association}"],
+    "description": "belongs_to association"
+  },
+  "Rails has_many through": {
+    "prefix": "hasmanythrough",
+    "body": ["has_many :${1:association}, through: :${2:join_table}"],
+    "description": "has_many through association"
+  },
+  "Rails validates": {
+    "prefix": "validates",
+    "body": ["validates :${1:attribute}, ${2:presence}: true"],
+    "description": "validates attribute"
+  },
+  "turbo_frame_tag": {
+    "prefix": "tframe",
+    "body": ["<%= turbo_frame_tag \"${1:id}\" do %>\n  ${0}\n<% end %>"],
+    "description": "Turbo Frame tag for Hotwire"
+  },
+  "turbo_stream": {
+    "prefix": "tstream",
+    "body": ["<%= turbo_stream.${1:replace} \"${2:id}\" do %>\n  ${0}\n<% end %>"],
+    "description": "Turbo Stream tag for Hotwire"
+  }
+}

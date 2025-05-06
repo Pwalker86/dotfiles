@@ -10,6 +10,7 @@ return {
 
 		mason.setup({
 			ui = {
+        border = "rounded",
 				icons = {
 					package_installed = "✓",
 					package_pending = "➜",
@@ -19,7 +20,15 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			ensure_installed = { "ruby_lsp", "rubocop" },
+			ensure_installed = { 
+          "solargraph", -- Ruby LSP
+          "ruby_lsp",    -- Ruby LSP alternative
+          "rubocop",
+          "emmet_ls",   -- HTML completion
+          "html",       -- HTML LSP
+          "cssls",      -- CSS LSP
+      },
+      automatic_installation = true,
 		})
 	end,
 }

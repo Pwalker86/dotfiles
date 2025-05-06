@@ -1,7 +1,3 @@
--- vim.g.lazyvim_ruby_lsp = "ruby_lsp"
--- vim.g.lazyvim_ruby_formatter = "rubocop"
--- set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
-
 vim.opt.rtp:append("/home/linuxbrew/.linuxbrew/opt/fzf")
 vim.opt.wrap = true
 -- clipboard

@@ -107,6 +107,7 @@ alias lg='lazygit'
 alias ber='bundle exec rspec'
 alias tf="thefuck"
 alias e="explorer.exe"
+alias ll='eza -T -L=1 -l'
 
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=header,grid --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"

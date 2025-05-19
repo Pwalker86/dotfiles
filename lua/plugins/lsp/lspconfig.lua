@@ -4,8 +4,8 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-    -- Useful status updates for LSP
-    { "j-hui/fidget.nvim", opts = {} },
+		-- Useful status updates for LSP
+		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	opts = {
 		---@type lspconfig.options
@@ -19,32 +19,31 @@ return {
 		},
 	},
 	config = function()
+		-- Configure diagnostics display
+		vim.diagnostic.config({
+			virtual_text = true,
+			signs = true,
+			underline = true,
+			update_in_insert = false,
+			severity_sort = true,
+			float = {
+				border = "rounded",
+				source = "always",
+				header = "",
+				prefix = "",
+			},
+		})
 
-    -- Configure diagnostics display
-    vim.diagnostic.config({
-      virtual_text = true,
-      signs = true,
-      underline = true,
-      update_in_insert = false,
-      severity_sort = true,
-      float = {
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-      },
-    })
+		-- Add borders to LSP windows
+		local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+			opts = opts or {}
+			opts.border = opts.border or "rounded"
+			return orig_util_open_floating_preview(contents, syntax, opts, ...)
+		end
 
-    -- Add borders to LSP windows
-    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-      opts = opts or {}
-      opts.border = opts.border or "rounded"
-      return orig_util_open_floating_preview(contents, syntax, opts, ...)
-    end
-    
-    local lspconfig = require("lspconfig")
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local lspconfig = require("lspconfig")
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		local keymap = vim.keymap
 
 		local opts = { noremap = true, silent = true }
@@ -103,7 +102,7 @@ return {
 		lspconfig.html.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-      filetypes = {"html", "eruby"}
+			filetypes = { "html", "eruby" },
 		})
 
 		lspconfig.lua_ls.setup({
@@ -132,17 +131,17 @@ return {
 			filetypes = { "html", "eruby", "javascript" },
 		})
 
-    -- Ruby LSP configuration
-    lspconfig.solargraph.setup({
-      capabilities = capabilities,
-      settings = {
-        solargraph = {
-          diagnostics = true,
-          completion = true,
-          formatting = true,
-        }
-      }
-    })
+		-- Ruby LSP configuration
+		lspconfig.solargraph.setup({
+			capabilities = capabilities,
+			settings = {
+				solargraph = {
+					diagnostics = true,
+					completion = true,
+					formatting = true,
+				},
+			},
+		})
 
 		lspconfig.ruby_ls.setup({
 			capabilities = capabilities,
@@ -186,7 +185,6 @@ return {
 			on_attach = on_attach,
 			filetypes = {
 				"html",
-				"erb",
 				"eruby",
 				"javascript",
 				"typescript",
@@ -197,6 +195,16 @@ return {
 				"css",
 				"scss",
 				"less",
+			},
+			root_dir = function(fname)
+				return require("lspconfig.util").root_pattern("Gemfile", ".git")(fname) or vim.loop.cwd()
+			end,
+			settings = {
+				tailwindCSS = {
+					includeLanguages = {
+						eruby = "html",
+					},
+				},
 			},
 		})
 

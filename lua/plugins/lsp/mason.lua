@@ -27,6 +27,7 @@ return {
 				"emmet_ls", -- HTML completion
 				"html", -- HTML LSP
 				"cssls", -- CSS LSP
+				"tailwindcss", -- Tailwind LSP
 			},
 			automatic_installation = true,
 		})

@@ -26,4 +26,4 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
 -- Disable Copilot completions
--- vim.g.copilot_enabled = false
+vim.g.copilot_enabled = false
